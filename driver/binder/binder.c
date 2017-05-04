@@ -43,7 +43,7 @@
 #define BINDER_IPC_32BIT 1
 #endif
 
-#include "binder.h"
+#include <uapi/linux/android/binder.h>
 #include "binder_trace.h"
 
 static DEFINE_MUTEX(binder_main_lock);
@@ -451,7 +451,9 @@ static void binder_set_nice(long nice)
 	set_user_nice(current, min_nice);
 	if (min_nice <= MAX_NICE)
 		return;
+#if 0
 	binder_user_error("%d RLIMIT_NICE not set\n", current->pid);
+#endif
 }
 
 static size_t binder_buffer_size(struct binder_proc *proc,
@@ -2074,7 +2076,7 @@ static int binder_thread_write(struct binder_proc *proc,
 			if (get_user(cookie, (binder_uintptr_t __user *)ptr))
 				return -EFAULT;
 
-			ptr += sizeof(void *);
+			ptr += sizeof(cookie);
 			list_for_each_entry(w, &proc->delivered_death, entry) {
 				struct binder_ref_death *tmp_death = container_of(w, struct binder_ref_death, work);
 
@@ -2834,7 +2836,7 @@ static int binder_vm_fault(struct vm_area_struct *vma, struct vm_fault *vmf)
 	return VM_FAULT_SIGBUS;
 }
 
-static struct vm_operations_struct binder_vm_ops = {
+static const struct vm_operations_struct binder_vm_ops = {
 	.open = binder_vma_open,
 	.close = binder_vma_close,
 	.fault = binder_vm_fault,
@@ -3692,24 +3694,15 @@ static int __init binder_init(void)
 				    &binder_transaction_log_failed,
 				    &binder_transaction_log_fops);
 	}
-
-	pr_info("initialized\n");
-
 	return ret;
 }
 
 static void __exit binder_exit(void)
 {
-	int ret;
-
-	ret = misc_deregister(&binder_miscdev);
-	if (unlikely(ret))
-		pr_err("failed to unregister misc device!\n");
+	misc_deregister(&binder_miscdev);
 
 	if (binder_deferred_workqueue)
 		destroy_workqueue(binder_deferred_workqueue);
-
-	pr_info("unloaded\n");
 }
 
 module_init(binder_init);
