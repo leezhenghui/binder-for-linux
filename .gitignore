@@ -35,6 +35,10 @@
 .DS_Store
 .vscode/
 
+# VIM 
+*.swp
+*.swo
+
 # IDE metadata
 .cproject
 .project
