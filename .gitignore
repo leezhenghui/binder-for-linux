@@ -34,3 +34,34 @@
 
 .DS_Store
 .vscode/
+
+# IDE metadata
+.cproject
+.project
+
+# intermediates artifacts
+driver/ashmem/.ashmem.o.cmd
+driver/ashmem/.ashmem_linux.ko.cmd
+driver/ashmem/.ashmem_linux.mod.o.cmd
+driver/ashmem/.ashmem_linux.o.cmd
+driver/ashmem/.built-in.o.cmd
+driver/ashmem/.deps.o.cmd
+driver/ashmem/.tmp_versions/
+driver/ashmem/Module.symvers
+driver/ashmem/ashmem_linux.mod.c
+driver/ashmem/modules.order
+driver/binder/.binder.o.cmd
+driver/binder/.binder_linux.ko.cmd
+driver/binder/.binder_linux.mod.o.cmd
+driver/binder/.binder_linux.o.cmd
+driver/binder/.built-in.o.cmd
+driver/binder/.deps.o.cmd
+driver/binder/.tmp_versions/
+driver/binder/Module.symvers
+driver/binder/binder_linux.mod.c
+driver/binder/modules.order
+
+# binary out execuble files
+servicemanager/servicemanager
+test/binderAddInts
+

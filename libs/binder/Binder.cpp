@@ -70,9 +70,9 @@ public:
 
 // ---------------------------------------------------------------------------
 
-BBinder::BBinder()
+BBinder::BBinder() 
 {
-  atomic_init(&mExtras, static_cast<uintptr_t>(0));
+  // atomic_init(&mExtras, static_cast<uintptr_t>(0));
 }
 
 bool BBinder::isBinderAlive() const
